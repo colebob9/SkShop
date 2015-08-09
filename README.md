@@ -2,7 +2,7 @@
 A shop add-on for Spigot powered by Skript!
 ***
 ### THIS ADD-ON IS CURRENTLY UNFINISHED
-**Don't expect this to be fully functional yet. Things will change.**
+**Don't expect this to be fully functional yet as many features are broken. Things will change.**
 ***
 
 **[Installation](https://github.com/colebob9/SkShop/wiki/Installation)**
