@@ -8,3 +8,9 @@ A shop add-on for Spigot powered by Skript!
 **[Installation](https://github.com/colebob9/SkShop/wiki/Installation)**
 
 **[Commands and Permissions](https://github.com/colebob9/SkShop/wiki/Commands-and-Permissions)**
+
+## Features
+* Able to look up any item in-game
+* Fancy GUI!
+* Open Source
+* Simple commands
