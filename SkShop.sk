@@ -1,0 +1,39 @@
+# SkShop - Written by colebob9
+# Version 0.1-ALPHA
+# Released under the MIT license.
+# **Requires Skript and SkQuery**
+
+variables:
+  {SkShop.itemprice.sell.1} = 15
+  {SkShop.itemprice.buy.1} = 20
+
+command /skshop <item>:
+    description: Opens a shop menu with the specified item.
+    permission: SkShop.player.open
+    aliases: /shop
+    usage: /skshop <item id>
+    trigger:
+        set {_player} to player
+        set {_item} to arg 1
+        set {SkShop.amount.%player%.%arg 1%} to 1
+        set {SkShop.itemprice.%player%.current.buy} to {SkShop.itemprice.buy.%{_item}%}
+        open chest with 3 rows named "Shop" to player
+        format slot 13 of player with arg 1 named "%{_item}%" to be unstealable
+        format slot 21 of player with light green dye named "Buy" with lore "Buying Price:||%{SkShop.itemprice.%player%.current.buy}%" to run [make player execute command "/skshopbuy %arg 1%"]
+        format slot 23 of player with magenta dye named "Sell" to be unstealable
+        format slot 1 of player with iron ingot named "Remove 1" to run [set {SkShop.amount.%player%.%arg 1%} to {SkShop.amount.%player%.%arg 1%} - 1]->[format slot 13 of player with {SkShop.amount.%player%.%arg 1%} of arg 1 named "%{_item}%" to be unstealable]
+        format slot 2 of player with gold ingot named "Add 1" to run [set {SkShop.amount.%player%.%arg 1%} to {SkShop.amount.%player%.%arg 1%} + 1]->[format slot 13 of player with {SkShop.amount.%player%.%arg 1%} of arg 1 named "%{_item}%" to be unstealable]
+        format slot 7 of player with emerald block named "Full Stack" to run [set {SkShop.amount.%player%.%arg 1%} to 64]->[format slot 13 of player with {SkShop.amount.%player%.%arg 1%} of arg 1 named "%{_item}%" to be unstealable]
+        format slot 6 of player with stick named "Back to 1" to run [set {SkShop.amount.%player%.%arg 1%} to 1]->[format slot 13 of player with {SkShop.amount.%player%.%arg 1%} of arg 1 named "%{_item}%" to be unstealable]
+        format slot 18 of player with emerald named "Balance" with lore "%player's balance%" to be unstealable
+
+command /skshopbuy <item>:
+    description: Buys the specified item from the shop.
+    permission: SkShop.player.buy
+    aliases: /shopbuy
+    usage: /skshop <item id>
+    trigger:
+        remove {SkShop.itemprice.%player%.current.buy} * {SkShop.amount.%player%.%arg 1%} from the player's balance
+        give player {SkShop.amount.%player%.%arg 1%} of arg 1
+        message "%player% bought %arg 1%" to console
+        log "%player% bought %arg 1%" to "SkShop/shop.log"
